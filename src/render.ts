@@ -1,3 +1,8 @@
+/*
+TRON by Alexander Abraham, a.k.a. "Angel Dollface".
+Licensed under the MIT license.
+*/
+
 // Standard three.js import.
 import * as THREE from 'three';
 
@@ -7,6 +12,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // Importing the shader for object glow-up.
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 
+// Importing a glitch filter for some funk.
+import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
+
 // Importing the "composer" to slap a filter on our scene.
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 
@@ -15,21 +23,31 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 
 // Importing the environment for rendering, lighting, etc.
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
-import { Camera, Scene } from 'three';
 
 // A function to render our models.
 export function renderModel(): void {
 
     // We make a new three.js scene.
-    let scene: Scene = new THREE.Scene();
+    let scene: THREE.Scene = new THREE.Scene();
 
     // We make a new camera. Something has
     // to look at our scene.
-    let camera: Camera = new THREE.PerspectiveCamera(
+    let camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
         90, // Angle.
         window.innerWidth/window.innerHeight, // FOV.
         0.01,
         1000
+    );
+
+    // Loading a remote image to display on the screen.
+    const textureURL: string = 'https://angeldollface.art/assets/images/banner/banner.png';
+    const textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
+    const screenTexture = textureLoader.load(textureURL);
+    const screenMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial(
+        {
+           map: screenTexture,
+           side: THREE.DoubleSide
+        }
     );
 
     // Setting the background color.
@@ -80,12 +98,15 @@ export function renderModel(): void {
 	composer.addPass( renderScene );
 	composer.addPass( bloomPass );
 
+    // Loading a GIF in.
+
     // And generate the scene from an environment.
     scene.environment = pmremGenerator.fromScene( environment ).texture;
 
     // Since the model is external we need to load it in.
     // For this we use the GLTF 2.0 loader three.js gives us.
     var loader = new GLTFLoader();
+
 
     // Empty variables to
     // populate with meshes from the loaded model.
@@ -99,7 +120,14 @@ export function renderModel(): void {
     let lightSix: any;
     let lightSeven: any;
     let lightEight: any;
-    const lightIntensity = 1;
+    let screen: any;
+
+    // How intense should the light be?
+    const lightIntensity = 1.5;
+
+    // Adding an effect on top of the whole scene.
+    const glitchPass: GlitchPass = new GlitchPass();
+	composer.addPass(glitchPass);
 
     // Closure to load a model from a path (remote or local).
     loader.load(
@@ -129,37 +157,50 @@ export function renderModel(): void {
           // GLTF model and set whether it can emit light,
           // what color that light should be and how strong
           // the emission should be. Same for the other three.
+
+          // Lighting up the light arch right at the front.
           lightOne = gltf.scene.getObjectByName('Light01');
           lightOne.material.emissive = new THREE.Color(0xFFFFFF);
           lightOne.material.emissiveIntensity = 2;
 
+          // Lighting up the light arch right behind the first arch.
           lightTwo = gltf.scene.getObjectByName('Light02');
           lightTwo.material.emissive = new THREE.Color(0xFFFFFF);
           lightTwo.material.emissiveIntensity = lightIntensity;
 
+          // Lighting up the light arch right in front of the screen.
           lightThree = gltf.scene.getObjectByName('Light03');
           lightThree.material.emissive = new THREE.Color(0xFFFFFF);
           lightThree.material.emissiveIntensity = lightIntensity;
 
+          // Lighting up the light arch right in the back.
           lightFour = gltf.scene.getObjectByName('Light04');
           lightFour.material.emissive = new THREE.Color(0xFFFFFF);
           lightFour.material.emissiveIntensity = lightIntensity;
-
+          
+          // Lighting up the light bar on the left of the model.
           lightFive = gltf.scene.getObjectByName('Light05');
           lightFive.material.emissive = new THREE.Color(0xFFFFFF);
           lightFive.material.emissiveIntensity = lightIntensity;
-
+          
+          // Lighting up the light bar on the right of the model.
           lightSix = gltf.scene.getObjectByName('Light06');
           lightSix.material.emissive = new THREE.Color(0xFFFFFF);
           lightSix.material.emissiveIntensity = lightIntensity;
 
+          // Lighting up the light bar at the front of the model.
           lightSeven = gltf.scene.getObjectByName('Light07');
           lightSeven.material.emissive = new THREE.Color(0xFFFFFF);
           lightSeven.material.emissiveIntensity = lightIntensity;
 
+          // Lighting up the light bar at the back of the model.
           lightEight = gltf.scene.getObjectByName('Light08');
           lightEight.material.emissive = new THREE.Color(0xFFFFFF);
           lightEight.material.emissiveIntensity = lightIntensity;
+
+          // Lighting up the screen.
+          screen = gltf.scene.getObjectByName('Screen');
+          screen.material = screenMaterial;
 
           // We call the animation function
           // otherwise nothing happens.
@@ -175,6 +216,10 @@ export function renderModel(): void {
     // recursively.
     const animate = () => {
 
+        // Adding an event listener to resize
+        // the scene for different devices.
+        window.addEventListener( 'resize', resize );
+
         // Re-renders the scene on
         // every frame bounce.
         composer.render();
@@ -183,10 +228,22 @@ export function renderModel(): void {
         // so we animate the moon 
         // by rotating it on the Z-Axis.
         sign.rotation.z -= 0.015;
-
+        
         // The "frame bounce".
         requestAnimationFrame(animate);
     }
+
+    // Defining a nested function to adjust some renderer
+    // and camera settings.
+    const resize = () => {
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        composer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = camera.position.z - 0.001;
+    }
+    
 }
 
 export default renderModel;

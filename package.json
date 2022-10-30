@@ -1,7 +1,7 @@
 {
   "name": "tron",
   "description": "A prototype of a 3D model for my main website.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@types/node": "^16.18.2",

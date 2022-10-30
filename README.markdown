@@ -64,6 +64,14 @@ $ npm run build
 - Upload to GitHub.
 - Deployment on GitHub Pages.
 
+### Version 1.1.0
+
+- Adjusted the light intensity.
+- Added some comments to the code.
+- Added a *"Glitch"* filter to the scene.
+- Added an image to the virtual screen to be displayed to users.
+- Added a function to automatically adjust the scene for different device sizes.
+
 ## NOTE :scroll:
 
 - *TRON :mechanical_arm:* by Alexander Abraham :black_heart: a.k.a. *"Angel Dollface" :dolls: :ribbon:*
