@@ -2,7 +2,7 @@
 
 ![GitHub CI](https://github.com/angeldollface/tron/actions/workflows/react.yml/badge.svg)
 
-***A prototype of 3D models for my main website.***
+***A prototype of a 3D model for my main website. :mechanical_arm:***
 
 ## ABOUT :books:
 
