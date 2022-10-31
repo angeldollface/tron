@@ -9,6 +9,7 @@ import React from 'react';
 
 // Importing types for Typescript.
 import { ReactElement } from 'react'
+import { ModifierFlags } from 'typescript';
 
 // Importing our render function.
 import { renderModel } from './render';
@@ -29,7 +30,14 @@ export class ModelCog extends React.Component {
     // after the virtual DOM
     // is synced up.
     componentDidMount(): void {
-        renderModel();        
+        const modelURL: string = 'https://angeldollface.art/assets/models/StageMoon.glb';
+        const textureURL: string = 'https://angeldollface.art/assets/images/banner/banner.png';
+        const symbolName: string = 'Moon';
+        renderModel(
+            textureURL,
+            symbolName,
+            modelURL
+        );        
     }
 }
 

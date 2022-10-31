@@ -25,7 +25,11 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
 
 // A function to render our models.
-export function renderModel(): void {
+export function renderModel(
+    textureURL: string,
+    symbolName: string,
+    modelURL: string
+): void {
 
     // We make a new three.js scene.
     let scene: THREE.Scene = new THREE.Scene();
@@ -40,9 +44,9 @@ export function renderModel(): void {
     );
 
     // Loading a remote image to display on the screen.
-    const textureURL: string = 'https://angeldollface.art/assets/images/banner/banner.png';
+    const texURL: string = textureURL;
     const textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
-    const screenTexture = textureLoader.load(textureURL);
+    const screenTexture = textureLoader.load(texURL);
     const screenMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial(
         {
            map: screenTexture,
@@ -120,10 +124,18 @@ export function renderModel(): void {
     let lightSix: any;
     let lightSeven: any;
     let lightEight: any;
+    let lightNine: any;
+    let lightTen: any;
+    let lightEleven: any;
+    let lightTwelve: any;
     let screen: any;
 
     // How intense should the light be?
-    const lightIntensity = 1.5;
+    const lightIntensity: number = 2.5;
+
+    // Different light intensities for the lights
+    // on the border of the scene.
+    let borderLightIntensity: number = 2.5;
 
     // Adding an effect on top of the whole scene.
     const glitchPass: GlitchPass = new GlitchPass();
@@ -131,7 +143,7 @@ export function renderModel(): void {
 
     // Closure to load a model from a path (remote or local).
     loader.load(
-        'https://angeldollface.art/assets/models/StageMoon.glb',
+        modelURL,
         function(gltf){
 
           // Main model.
@@ -151,7 +163,7 @@ export function renderModel(): void {
 
           // ...and populate our variables with different
           // objects.
-          sign = gltf.scene.getObjectByName('Moon');
+          sign = gltf.scene.getObjectByName(symbolName);
 
           // We fetch one of the corner pillars from the
           // GLTF model and set whether it can emit light,
@@ -198,6 +210,22 @@ export function renderModel(): void {
           lightEight.material.emissive = new THREE.Color(0xFFFFFF);
           lightEight.material.emissiveIntensity = lightIntensity;
 
+          /*lightNine = gltf.scene.getObjectByName('Light09');
+          lightNine.material.emissive = new THREE.Color(0xFFFFFF);
+          lightNine.material.emissiveIntensity = lightIntensity;*/
+
+          lightTen = gltf.scene.getObjectByName('Light10');
+          lightTen.material.emissive = new THREE.Color(0xFFFFFF);
+          lightTen.material.emissiveIntensity = borderLightIntensity;
+
+          lightEleven = gltf.scene.getObjectByName('Light11');
+          lightEleven.material.emissive = new THREE.Color(0xFFFFFF);
+          lightEleven.material.emissiveIntensity = borderLightIntensity;
+
+          lightTwelve = gltf.scene.getObjectByName('Light12');
+          lightTwelve.material.emissive = new THREE.Color(0xFFFFFF);
+          lightTwelve.material.emissiveIntensity = borderLightIntensity;
+
           // Lighting up the screen.
           screen = gltf.scene.getObjectByName('Screen');
           screen.material = screenMaterial;
@@ -216,9 +244,14 @@ export function renderModel(): void {
     // recursively.
     const animate = () => {
 
+        setInterval(blinkLights, 100);
+
         // Adding an event listener to resize
         // the scene for different devices.
-        window.addEventListener( 'resize', resize );
+        window.addEventListener(
+            'resize', 
+            resize 
+        );
 
         // Re-renders the scene on
         // every frame bounce.
@@ -242,6 +275,39 @@ export function renderModel(): void {
         camera.updateProjectionMatrix();
         composer.setSize(window.innerWidth, window.innerHeight);
         camera.position.z = camera.position.z - 0.001;
+    }
+
+    const blinkLights = () => {
+        if (
+            lightOne.material.emissiveIntensity === 0 &&
+            lightTwo.material.emissiveIntensity === 0 &&
+            lightThree.material.emissiveIntensity === 0 &&
+            lightFour.material.emissiveIntensity === 0 &&
+            lightTen.material.emissiveIntensity === 0 &&
+            lightEleven.material.emissiveIntensity === 0 &&
+            lightTwelve.material.emissiveIntensity === 0
+
+        ){
+            lightOne.material.emissiveIntensity = 2.5;
+            lightOne.material.emissiveIntensity = 2.5;
+            lightTwo.material.emissiveIntensity = 2.5;
+            lightThree.material.emissiveIntensity = 2.5;
+            lightFour.material.emissiveIntensity = 2.5;
+            lightTen.material.emissiveIntensity = 2.5;
+            lightEleven.material.emissiveIntensity = 2.5;
+            lightTwelve.material.emissiveIntensity = 2.5;
+        }
+        else {
+            lightOne.material.emissiveIntensity = 0;
+            lightOne.material.emissiveIntensity = 0;
+            lightOne.material.emissiveIntensity = 0;
+            lightTwo.material.emissiveIntensity = 0;
+            lightThree.material.emissiveIntensity = 0;
+            lightFour.material.emissiveIntensity = 0;
+            lightTen.material.emissiveIntensity = 0;
+            lightEleven.material.emissiveIntensity = 0;
+            lightTwelve.material.emissiveIntensity = 0;
+        }
     }
     
 }
