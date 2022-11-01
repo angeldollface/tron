@@ -43,7 +43,7 @@ $ cd tron
 $ npm install
 ```
 
-- 4.) Run Vue's development server:
+- 4.) Run React's development server:
 
 ```bash
 $ npm run serve
