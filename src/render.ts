@@ -28,7 +28,9 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 export function renderModel(
     textureURL: string,
     symbolName: string,
-    modelURL: string
+    modelURL: string,
+    borderLightColor: number,
+    stageLightColor: number
 ): void {
 
     // We make a new three.js scene.
@@ -127,7 +129,6 @@ export function renderModel(
     let lightNine: any;
     let lightTen: any;
     let lightEleven: any;
-    let lightTwelve: any;
     let screen: any;
 
     // How intense should the light be?
@@ -138,8 +139,8 @@ export function renderModel(
     let borderLightIntensity: number = 2.5;
 
     // Adding an effect on top of the whole scene.
-    const glitchPass: GlitchPass = new GlitchPass();
-	composer.addPass(glitchPass);
+    /*chPass: GlitchPass = new GlitchPass();
+	composer.addPass(glitchPass);*/
 
     // Closure to load a model from a path (remote or local).
     loader.load(
@@ -172,59 +173,54 @@ export function renderModel(
 
           // Lighting up the light arch right at the front.
           lightOne = gltf.scene.getObjectByName('Light01');
-          lightOne.material.emissive = new THREE.Color(0xFFFFFF);
+          lightOne.material.emissive = new THREE.Color(stageLightColor);
           lightOne.material.emissiveIntensity = 2;
 
           // Lighting up the light arch right behind the first arch.
           lightTwo = gltf.scene.getObjectByName('Light02');
-          lightTwo.material.emissive = new THREE.Color(0xFFFFFF);
+          lightTwo.material.emissive = new THREE.Color(stageLightColor);
           lightTwo.material.emissiveIntensity = lightIntensity;
 
           // Lighting up the light arch right in front of the screen.
           lightThree = gltf.scene.getObjectByName('Light03');
-          lightThree.material.emissive = new THREE.Color(0xFFFFFF);
+          lightThree.material.emissive = new THREE.Color(stageLightColor);
           lightThree.material.emissiveIntensity = lightIntensity;
 
           // Lighting up the light arch right in the back.
           lightFour = gltf.scene.getObjectByName('Light04');
-          lightFour.material.emissive = new THREE.Color(0xFFFFFF);
+          lightFour.material.emissive = new THREE.Color(stageLightColor);
           lightFour.material.emissiveIntensity = lightIntensity;
           
           // Lighting up the light bar on the left of the model.
           lightFive = gltf.scene.getObjectByName('Light05');
-          lightFive.material.emissive = new THREE.Color(0xFFFFFF);
+          lightFive.material.emissive = new THREE.Color(stageLightColor);
           lightFive.material.emissiveIntensity = lightIntensity;
           
           // Lighting up the light bar on the right of the model.
           lightSix = gltf.scene.getObjectByName('Light06');
-          lightSix.material.emissive = new THREE.Color(0xFFFFFF);
+          lightSix.material.emissive = new THREE.Color(stageLightColor);
           lightSix.material.emissiveIntensity = lightIntensity;
 
           // Lighting up the light bar at the front of the model.
           lightSeven = gltf.scene.getObjectByName('Light07');
-          lightSeven.material.emissive = new THREE.Color(0xFFFFFF);
+          lightSeven.material.emissive = new THREE.Color(stageLightColor);
           lightSeven.material.emissiveIntensity = lightIntensity;
 
           // Lighting up the light bar at the back of the model.
           lightEight = gltf.scene.getObjectByName('Light08');
-          lightEight.material.emissive = new THREE.Color(0xFFFFFF);
+          lightEight.material.emissive = new THREE.Color(stageLightColor);
           lightEight.material.emissiveIntensity = lightIntensity;
 
-          /*lightNine = gltf.scene.getObjectByName('Light09');
-          lightNine.material.emissive = new THREE.Color(0xFFFFFF);
-          lightNine.material.emissiveIntensity = lightIntensity;*/
+          lightNine = gltf.scene.getObjectByName('Light09');
+          console.log(lightNine);
 
           lightTen = gltf.scene.getObjectByName('Light10');
-          lightTen.material.emissive = new THREE.Color(0xFFFFFF);
+          lightTen.material.emissive = new THREE.Color(borderLightColor);
           lightTen.material.emissiveIntensity = borderLightIntensity;
 
           lightEleven = gltf.scene.getObjectByName('Light11');
-          lightEleven.material.emissive = new THREE.Color(0xFFFFFF);
+          lightEleven.material.emissive = new THREE.Color(borderLightColor);
           lightEleven.material.emissiveIntensity = borderLightIntensity;
-
-          lightTwelve = gltf.scene.getObjectByName('Light12');
-          lightTwelve.material.emissive = new THREE.Color(0xFFFFFF);
-          lightTwelve.material.emissiveIntensity = borderLightIntensity;
 
           // Lighting up the screen.
           screen = gltf.scene.getObjectByName('Screen');
@@ -238,7 +234,7 @@ export function renderModel(
     );
 
     // We set up the camera position.
-    camera.position.set(0,1,4);
+    camera.position.set(0,1,6);
 
     // And animate the whole scene
     // recursively.
@@ -282,20 +278,13 @@ export function renderModel(
             lightOne.material.emissiveIntensity === 0 &&
             lightTwo.material.emissiveIntensity === 0 &&
             lightThree.material.emissiveIntensity === 0 &&
-            lightFour.material.emissiveIntensity === 0 &&
-            lightTen.material.emissiveIntensity === 0 &&
-            lightEleven.material.emissiveIntensity === 0 &&
-            lightTwelve.material.emissiveIntensity === 0
-
+            lightFour.material.emissiveIntensity === 0
         ){
             lightOne.material.emissiveIntensity = 2.5;
             lightOne.material.emissiveIntensity = 2.5;
             lightTwo.material.emissiveIntensity = 2.5;
             lightThree.material.emissiveIntensity = 2.5;
             lightFour.material.emissiveIntensity = 2.5;
-            lightTen.material.emissiveIntensity = 2.5;
-            lightEleven.material.emissiveIntensity = 2.5;
-            lightTwelve.material.emissiveIntensity = 2.5;
         }
         else {
             lightOne.material.emissiveIntensity = 0;
@@ -304,9 +293,6 @@ export function renderModel(
             lightTwo.material.emissiveIntensity = 0;
             lightThree.material.emissiveIntensity = 0;
             lightFour.material.emissiveIntensity = 0;
-            lightTen.material.emissiveIntensity = 0;
-            lightEleven.material.emissiveIntensity = 0;
-            lightTwelve.material.emissiveIntensity = 0;
         }
     }
     
