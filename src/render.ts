@@ -270,7 +270,6 @@ export function renderModel(
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         composer.setSize(window.innerWidth, window.innerHeight);
-        camera.position.z = camera.position.z - 0.001;
     }
 
     const blinkLights = () => {
