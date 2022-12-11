@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tron/static/css/main.dccf9dd2.css",
-    "main.js": "/tron/static/js/main.3b098d4d.js",
+    "main.js": "/tron/static/js/main.46e0b1b4.js",
     "index.html": "/tron/index.html",
     "main.dccf9dd2.css.map": "/tron/static/css/main.dccf9dd2.css.map",
-    "main.3b098d4d.js.map": "/tron/static/js/main.3b098d4d.js.map"
+    "main.46e0b1b4.js.map": "/tron/static/js/main.46e0b1b4.js.map"
   },
   "entrypoints": [
     "static/css/main.dccf9dd2.css",
-    "static/js/main.3b098d4d.js"
+    "static/js/main.46e0b1b4.js"
   ]
 }
