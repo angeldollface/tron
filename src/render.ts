@@ -234,7 +234,7 @@ export function renderModel(
     );
 
     // We set up the camera position.
-    camera.position.set(0,1,6);
+    camera.position.set(0,1,3.5);
 
     // And animate the whole scene
     // recursively.
