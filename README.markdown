@@ -8,13 +8,17 @@
 
 Since I'm overhauling my website and wanted to learn a bit more Typescript and learn some React, I thought that I'd make this little app to showcase one of my 3D models that will be used for my main site.
 
-## LEARN AND RE-USE :thinking: :sparkles:
-
-If you want to understand how I've achieved this project, read the source code in the file `src/render.ts`.
-
 ## DEPLOYED PROJECT ON GITHUB PAGES :rocket:
 
 To view a live deployed version of this project and this demo, click here: [VIEW](https://angeldollface.art/tron)
+
+## SHOWCASE :camera:
+
+![Showcase for Tron.](/assets/tron.gif)
+
+## LEARN AND RE-USE :thinking: :sparkles:
+
+If you want to understand how I've achieved this project, read the source code in the file `src/render.ts`.
 
 ## TRY THIS PROJECT ON YOUR OWN MACHINE! :inbox_tray:
 
