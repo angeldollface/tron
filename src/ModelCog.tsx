@@ -31,7 +31,7 @@ export class ModelCog extends React.Component {
     // is synced up.
     componentDidMount(): void {
         const modelURL: string = 'https://angeldollface.art/assets/models/StageMoon.glb';
-        const textureURL: string = 'https://angeldollface.art/assets/images/banner/banner.png';
+        const textureURL: string = 'https://angeldollface.art/assets/images/matcaps/05.png';
         const symbolName: string = 'Moon';
         const stageLightColor: number = 0xFFFFFF;
         const borderLightColor: number = 0xEA1573;

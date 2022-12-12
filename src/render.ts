@@ -12,9 +12,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // Importing the shader for object glow-up.
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 
-// Importing a glitch filter for some funk.
-import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
-
 // Importing the "composer" to slap a filter on our scene.
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 
@@ -137,10 +134,6 @@ export function renderModel(
     // Different light intensities for the lights
     // on the border of the scene.
     let borderLightIntensity: number = 2.5;
-
-    // Adding an effect on top of the whole scene.
-    /*chPass: GlitchPass = new GlitchPass();
-	composer.addPass(glitchPass);*/
 
     // Closure to load a model from a path (remote or local).
     loader.load(
