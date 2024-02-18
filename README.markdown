@@ -10,7 +10,7 @@ Since I'm overhauling my website and wanted to learn a bit more Typescript and l
 
 ## DEPLOYED PROJECT ON GITHUB PAGES :rocket:
 
-To view a live deployed version of this project and this demo, click here: [VIEW](https://angeldollface.art/tron)
+To view a live deployed version of this project and this demo, click here: [VIEW](https://angeldollface.boo/tron)
 
 ## SHOWCASE :camera:
 
