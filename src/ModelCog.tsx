@@ -30,8 +30,8 @@ export class ModelCog extends React.Component {
     // after the virtual DOM
     // is synced up.
     componentDidMount(): void {
-        const modelURL: string = 'https://angeldollface.art/doll-cdn/models/StageMoon.glb';
-        const textureURL: string = 'https://angeldollface.art/doll-cdn/images/matcaps/05.png';
+        const modelURL: string = 'https://angeldollface.boo/doll-cdn/models/StageMoon.glb';
+        const textureURL: string = 'https://angeldollface.boo/doll-cdn/images/matcaps/05.png';
         const symbolName: string = 'Moon';
         const stageLightColor: number = 0xFFFFFF;
         const borderLightColor: number = 0xEA1573;
